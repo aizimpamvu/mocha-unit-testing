@@ -5,7 +5,7 @@ var expect= chai.expect;
 
 var myObj = new MyClass();
 
-describe ("Test suit", function(){
+describe.skip ("Test suit", function(){
    it("Test the add method", function(){
        expect(myObj.add(1,2)).to.be.equal(3);
    });
@@ -37,4 +37,33 @@ it("Mock say hello method", function(){
     mock.verify();
 });
 
+});
+
+// Stub for checking method returns values
+describe.skip("Test suit for stub", function(){
+    it("Stub add method", function(){
+        var stub = sinon.stub(myObj, "add");
+        stub
+            .withArgs(10, 20)
+            .onFirstCall()
+            .returns(100)
+            .onSecondCall()
+            .returns(200);
+
+        expect(myObj.callAnotherFn(10,20)).to.be.equal(100);
+        expect(myObj.callAnotherFn(10,20)).to.be.equal(200);
+        
+    });
+});
+
+// Premises testing
+describe("Test the presmises", function(){
+    it("Premise test case", function(){
+      myObj.testPromise().then(function(result){
+          this.timeout(0);
+          expect(result).to.be.equal(43);
+          
+      })
+        
+    });
 });
